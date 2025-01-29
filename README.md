@@ -62,6 +62,7 @@ const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig = {
   reactStrictMode: true,
+  output: 'exports',
   images: {
     unoptimized: true, // GitHub Pages doesn't support Next.js Image Optimization
   },
@@ -145,7 +146,7 @@ git push origin main
 
 ## Step 9: Follow These Image Instructions
 
-<a href="/deploye.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+[View PDF](https://CoderRedwing.github.io/Next.js-project-to-GitHub-Pages/deploye.pdf)
 
 ## Step 10: Deploy Your Project
 
