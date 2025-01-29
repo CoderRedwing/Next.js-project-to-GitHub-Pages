@@ -1,36 +1,183 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## About This Repository
 
-## Getting Started
+This repository contains a simple step-by-step guide for deploying a **Next.js project** to **GitHub Pages**. It is designed for developers looking to host static Next.js sites with minimal configuration.
 
-First, run the development server:
+By following this guide, you can deploy your Next.js app to GitHub Pages with ease. Feel free to contribute or open issues if you face any problems.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Deploy Next.js on GitHub Pages 🚀
+
+This guide provides step-by-step instructions to **deploy a Next.js project** to **GitHub Pages** seamlessly.
+
+---
+
+## 🚀 Prerequisites
+
+Before proceeding, ensure you have:
+
+- **Node.js (LTS version)**
+- **GitHub repository** created and set to public
+- **Basic knowledge of Git & GitHub**
+
+---
+
+## Step 1: Create a Next.js Project (Skip if Already Done)
+
+If you haven't created a Next.js project yet, run:
+
+```sh
+npx create-next-app@latest my-next-app
+cd my-next-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+If you already have a project, **skip this step**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Step 2: Check & Fix Linting Issues (Important)
 
-## Learn More
+Before deployment, ensure there are **no linting errors** by running:
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+npm run lint -- --fix
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+or
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sh
+npx eslint . --fix
+```
 
-## Deploy on Vercel
+✅ **Make sure there are no errors before proceeding!**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Step 3: Modify `next.config.js` and `package.json`
+
+### Edit `next.config.js` (or `next.config.ts` for TypeScript)
+
+Add the following configuration:
+
+```js
+const isProd = process.env.NODE_ENV === "production";
+
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    unoptimized: true, // GitHub Pages doesn't support Next.js Image Optimization
+  },
+  basePath: isProd ? "/<your-repo-name>" : "",
+  assetPrefix: isProd ? "/<your-repo-name>/" : "",
+};
+
+module.exports = nextConfig;
+```
+
+**✅ Ensure that `basePath` and `assetPrefix` match your repository name.**
+
+### Update `package.json` Scripts
+
+Modify your `package.json` to include:
+
+```json
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "export": "next export",
+  "deploy": "next build && next export && touch out/.nojekyll && gh-pages -d out"
+}
+```
+
+---
+
+## Step 4: Install Required Dependencies
+
+Run the following command to install `gh-pages`:
+
+```sh
+npm install gh-pages
+```
+
+---
+
+## Step 5: Update Image Paths
+
+To ensure images load correctly, **update all image paths**:  
+If your images are inside the `public/images/` folder, use:
+
+```jsx
+<img src="/<your-repo-name>/images/logo.png" alt="Logo" />
+```
+
+✅ **Sometimes the following works, but if images don’t load, use the first approach:**
+
+```jsx
+<img src="/images/logo.png" alt="Logo" />
+```
+
+---
+
+## Step 6: Push Your Code to GitHub
+
+Commit and push your changes to your GitHub repository:
+
+```sh
+git add .
+git commit -m "Configured Next.js for GitHub Pages"
+git push origin main
+```
+
+---
+
+## Step 7: Open GitHub Repository
+
+1. Go to **GitHub** and open your repository.
+2. Click on **Settings** (for the repository, NOT your profile).
+
+---
+
+## Step 8: Configure GitHub Pages
+
+1. **Scroll down** to the **Pages** section.
+2. Under **Build and Deployment**, select **GitHub Actions**.
+3. Click **Configure**.
+
+---
+
+## Step 9: Follow These Image Instructions
+
+![GitHub Pages Configuration](https://example.com/your-image-link.png)  
+_(Add step-by-step images/screenshots here to help users configure GitHub Actions correctly.)_
+
+---
+
+## Step 10: Deploy Your Project
+
+After GitHub Actions runs successfully, visit:  
+**`https://<your-username>.github.io/<your-repo-name>/`**
+
+---
+
+## ✅ Additional Notes
+
+- If images **don’t load**, ensure you’ve set `basePath` and `assetPrefix` correctly.
+- If you get **404 errors**, recheck the GitHub Pages settings.
+- To redeploy after updates, simply run:
+  ```sh
+  npm run deploy
+  ```
+
+---
+
+## 📌 Alternative: Deploying on Vercel
+
+For easier deployment, use **Vercel**:
+
+1. Sign in to [Vercel](https://vercel.com/)
+2. Connect your GitHub repo
+3. Click **Deploy** (No extra configuration needed!)
+
+---
+
+This guide ensures a smooth **Next.js deployment on GitHub Pages** without errors. 🚀 If you found this helpful, **star this repo!** ⭐
+
+---
