@@ -145,10 +145,7 @@ git push origin main
 
 ## Step 9: Follow These Image Instructions
 
-![GitHub Pages Configuration](https://example.com/your-image-link.png)  
-_(Add step-by-step images/screenshots here to help users configure GitHub Actions correctly.)_
-
----
+<a href="/deploye.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
 
 ## Step 10: Deploy Your Project
 
